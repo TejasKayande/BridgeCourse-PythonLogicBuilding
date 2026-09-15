@@ -14,6 +14,9 @@ PS
 if reading is not your thing, watch this video
 [Youtube Vide](https://www.youtube.com/watch?v=ouipbDkwHWA)
 
+* Demo
+![Conways Game of Life](./docs/demo_gif.mp4)
+
 ## Rules
 
 For each cell:
