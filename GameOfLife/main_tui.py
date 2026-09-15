@@ -2,7 +2,7 @@
 # @File:   main.py (GameOfLife)
 # @Brief:  Implementation of Conways Game of Life
 # @Author: Tejas
-# @Date:   28-08-2025
+# @Date:   2026-09-15
 # @Notice: This is a simple implementation of conways game of life
 # @Source: https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
 # ===============================================================================

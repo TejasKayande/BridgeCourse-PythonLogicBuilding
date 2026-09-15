@@ -2,7 +2,7 @@
 # @File:   main.py (TUI_Calc)
 # @Brief:  Implementation of a HomeWork given on date <2026-09-15 Tue>
 # @Author: Tejas
-# @Date:   28-08-2025
+# @Date:   2026-09-15 Tue
 # @Notice: This was created to demonstrate how I would write the code for the
 #          given homeword question.
 # ===============================================================================
