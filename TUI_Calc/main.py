@@ -12,17 +12,17 @@
 # 1. str.center() -> when used with print, str.center can leave a gap of specified
 #                    size on either side of the string so that it fits centered
 #                    inside a given width (in the param list).
-#    used on line numbers: 
+#    used on line numbers: 50
 #
 # 2. str.lower() -> turns all the char of the string to lower char, ex: A becomes a.
 #                   this comes in handy when we compare and dont have to worry
 #                   about comparing both lower and upper case variations
-#    used on line numbers:
+#    used on line numbers: 57
 #
 # 3. str.split() -> this function identifies words seperated by spaces (' ') in
 #                   a string and adds them to a list of words.
 #                   ex: "this is a string".split() -> ['this', 'is', 'a', 'string']
-#    used on line numbers:
+#    used on line numbers: 65, 77, 98, 124
 
 # TODO(Tejas): For everyone!
 # whenever you learn about exception handling I want you to go ahead and handle errors
