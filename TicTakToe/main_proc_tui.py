@@ -1,5 +1,5 @@
 # ===============================================================================
-# @File:   main.py (TicTakToe)
+# @File:   main_proc_tui.py (TicTakToe)
 # @Brief:  Implementation of the famous game of Tic Tac Toe 
 # @Author: Tejas
 # @Date:   2026-09-17 Thu

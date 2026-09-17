@@ -1,5 +1,5 @@
 # ===============================================================================
-# @File:   main.py (GameOfLife)
+# @File:   main_tui.py (GameOfLife)
 # @Brief:  Implementation of Conways Game of Life
 # @Author: Tejas
 # @Date:   2026-09-15 Tue
