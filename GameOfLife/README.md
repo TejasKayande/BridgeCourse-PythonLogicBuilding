@@ -14,7 +14,7 @@ PS
 if reading is not your thing, watch this video
 [Youtube Vide](https://www.youtube.com/watch?v=ouipbDkwHWA)
 
-![Conways Game of Life](./docs/demo_gif.gif)
+![Conways Game of Life](./docs/demo.gif)
 
 ## Rules
 
