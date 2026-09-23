@@ -25,9 +25,6 @@ SCREEN_HEIGHT = 800
 
 FPS = 60.0
 
-G_screen = None
-G_clock  = None
-
 # NOTE(Tejas): this is a what we implemented in the lecture on OOP. Try to use
 # it define a Rect and do a draw call on it. Keep in mind that in maths the x: 0
 # and y: 0 is at the bottom left but usually in graphics applications the 
@@ -131,35 +128,11 @@ def main():
     # def main() facade, but since I have programmed C this is the best way I
     # can keep track of what is happening. The choise is yours...
 
-    global G_screen, G_clock
     pygame.init()
-    G_screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("3D in 2D")
 
-    G_clock = pygame.time.Clock()
-
-    points = [ 
-        Point(+0.25, +0.25, -0.25), 
-        Point(-0.25, +0.25, -0.25), 
-        Point(-0.25, -0.25, -0.25),
-        Point(+0.25, -0.25, -0.25), 
-
-        Point(+0.25, +0.25, +0.25), 
-        Point(-0.25, +0.25, +0.25), 
-        Point(-0.25, -0.25, +0.25),
-        Point(+0.25, -0.25, +0.25), 
-    ]
-
-    # NOTE(Tejas): this is for lines, these tell us which points to connect to
-    # make a cube. 
-    faces = [
-        [0, 1, 2, 3],
-        [4, 5, 6, 7],
-        [0, 4],
-        [1, 5],
-        [2, 6],
-        [3, 7]
-    ]
+    clock = pygame.time.Clock()
 
     # NOTE(Tejas): now this is a fully functional 3D renderer in python. if you
     # want you can paste the above points and faces list to ChatGPT and ask it
@@ -167,13 +140,124 @@ def main():
     # code right here and you will have a 3D rotating house!!!
     # make sure to paste the code below this line so it gets overriden and used.
     # or you can delete the above points and faces list and paste the new one!
+    points = [
+        # Body - bottom
+        Point(-0.30, -0.60, -0.20),  # 0
+        Point(+0.30, -0.60, -0.20),  # 1
+        Point(+0.30, -0.60, +0.20),  # 2
+        Point(-0.30, -0.60, +0.20),  # 3
+        
+        # Body - shoulders
+        Point(-0.35, +0.20, -0.20),  # 4
+        Point(+0.35, +0.20, -0.20),  # 5
+        Point(+0.35, +0.20, +0.20),  # 6
+        Point(-0.35, +0.20, +0.20),  # 7
+        
+        # Head
+        Point(-0.28, +0.45, -0.20),  # 8
+        Point(+0.28, +0.45, -0.20),  # 9
+        Point(+0.28, +0.45, +0.20),  # 10
+        Point(-0.28, +0.45, +0.20),  # 11
+        
+        # Top of head
+        Point(-0.20, +0.75, -0.15),  # 12
+        Point(+0.20, +0.75, -0.15),  # 13
+        Point(+0.20, +0.75, +0.15),  # 14
+        Point(-0.20, +0.75, +0.15),  # 15
+        
+        # Beak
+        Point(-0.08, +0.52, -0.20),   # 16
+        Point(+0.08, +0.52, -0.20),   # 17
+        Point(0.0, +0.43, -0.40),     # 18
+        
+        # Left wing
+        Point(-0.35, +0.15, -0.15),   # 19
+        Point(-0.55, -0.05, -0.15),   # 20
+        Point(-0.45, -0.45, -0.15),   # 21
+        Point(-0.25, -0.30, -0.15),   # 22
+        
+        # Right wing
+        Point(+0.35, +0.15, -0.15),   # 23
+        Point(+0.55, -0.05, -0.15),   # 24
+        Point(+0.45, -0.45, -0.15),   # 25
+        Point(+0.25, -0.30, -0.15),   # 26
+        
+        # Left foot
+        Point(-0.30, -0.60, -0.20),   # 27
+        Point(-0.05, -0.60, -0.20),   # 28
+        Point(-0.05, -0.68, -0.45),   # 29
+        Point(-0.35, -0.68, -0.45),   # 30
+        
+        # Right foot
+        Point(+0.05, -0.60, -0.20),   # 31
+        Point(+0.30, -0.60, -0.20),   # 32
+        Point(+0.35, -0.68, -0.45),   # 33
+        Point(+0.05, -0.68, -0.45),   # 34
+    ]
+    
+    # NOTE(Tejas): These tell us which points to connect
+    # to make the penguin.
+    faces = [
+        # Body
+        [0, 1, 5, 4],
+        [1, 2, 6, 5],
+        [2, 3, 7, 6],
+        [3, 0, 4, 7],
+        
+        # Head
+        [8, 9, 13, 12],
+        [9, 10, 14, 13],
+        [10, 11, 15, 14],
+        [11, 8, 12, 15],
+        
+        # Head to body
+        [4, 5],
+        [5, 9],
+        [9, 8],
+        [8, 4],
+        
+        # Top of head
+        [12, 13],
+        [13, 14],
+        [14, 15],
+        [15, 12],
+        
+        # Beak
+        [16, 17],
+        [16, 18],
+        [17, 18],
+        
+        # Left wing
+        [19, 20],
+        [20, 21],
+        [21, 22],
+        [22, 19],
+        
+        # Right wing
+        [23, 24],
+        [24, 25],
+        [25, 26],
+        [26, 23],
+        
+        # Left foot
+        [27, 28],
+        [28, 29],
+        [29, 30],
+        [30, 27],
+        
+        # Right foot
+        [31, 32],
+        [32, 33],
+        [33, 34],
+        [34, 31],
+    ]
 
 
 
     # NOTE(Tejas): this is the speed at which the cube will rotate. The angle is
     # in radians and we are rotating it at 90 degrees per second. You can adjust
     # this to make the cube go fast or slow.
-    rotation_speed = math.pi / 2.0
+    rotation_speed = math.pi
     angle = 0.0
 
     dz = 1.0
@@ -184,7 +268,7 @@ def main():
 
         delta_time = 1.0 / FPS
         angle += rotation_speed * delta_time
-        # z_offset += dz * delta_time
+        z_offset += dz * delta_time
 
         transformed_points = []
 
@@ -206,24 +290,24 @@ def main():
 
         # NOTE(Tejas): clear the screen. if you are using VS Code you can hover
         # over any function to see its details
-        G_screen.fill((0, 0, 0)) # NOTE(Tejas): Clearing to black
+        screen.fill((0, 0, 0)) # NOTE(Tejas): Clearing to black
 
         # NOTE(Tejas): Uncomment this to see the points of the cube.
         # for point in transformed_points:
-        #     point.draw(G_screen, (255, 255, 255))
+        #     point.draw(screen, (255, 255, 255))
 
         for face in faces:
             for i in range(len(face)):
                 p1 = transformed_points[face[i]]
                 p2 = transformed_points[face[(i + 1) % len(face)]]
-                draw_line(G_screen, p1, p2, (0, 0, 255))
+                draw_line(screen, p1, p2, (0, 0, 255))
 
         # NOTE(Tejas): look up double buffering on the internet if you dont
         # understand what this is.
         pygame.display.flip() 
 
         # NOTE(Tejas): we'll hard code the FPS to be 60.
-        G_clock.tick(FPS) 
+        clock.tick(FPS) 
 
     pygame.quit()
 
