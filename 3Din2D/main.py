@@ -6,6 +6,17 @@
 # @Notice: This is how games will render 3D graphics even though the screen is 2D.
 # ===============================================================================
 
+# NOTE(Tejas): This is actually how 3D rendering APIs like OpenGL and DirectX
+# work. They take a 3D point and project it onto a 2D screen. This is done by
+# using some trignometry and some linear algebra. The code is not optimized for
+# performance but it should give you a good idea of how 3D graphics are rendered
+# in games. 
+
+# NOTE(Tejas): we are limiting how many points we are actually rendering to the
+# screen. In actual 3D games one object may consist of tens of thousands of
+# points and faces. 
+
+
 # DISCLAIMER(Tejas): This will seem very complicated if you havent done any graphics programming before.
 # But this is essentially how 3D graphics are rendered in games. The idea is to
 # take a 3D point and project it onto a 2D screen. This is done by using some
@@ -16,6 +27,8 @@
 # better if we use a proper GUI window and plus this would be a great
 # introduction to graphics programming
 import pygame
+
+from models import *
 
 # NOTE(Tejas): we are going to use some trignometry to rotate things
 import math
@@ -134,124 +147,23 @@ def main():
 
     clock = pygame.time.Clock()
 
-    # NOTE(Tejas): now this is a fully functional 3D renderer in python. if you
-    # want you can paste the above points and faces list to ChatGPT and ask it
-    # to generate a 3D model of a house in the same format, and then paste that
-    # code right here and you will have a 3D rotating house!!!
-    # make sure to paste the code below this line so it gets overriden and used.
-    # or you can delete the above points and faces list and paste the new one!
-    points = [
-        # Body - bottom
-        Point(-0.30, -0.60, -0.20),  # 0
-        Point(+0.30, -0.60, -0.20),  # 1
-        Point(+0.30, -0.60, +0.20),  # 2
-        Point(-0.30, -0.60, +0.20),  # 3
-        
-        # Body - shoulders
-        Point(-0.35, +0.20, -0.20),  # 4
-        Point(+0.35, +0.20, -0.20),  # 5
-        Point(+0.35, +0.20, +0.20),  # 6
-        Point(-0.35, +0.20, +0.20),  # 7
-        
-        # Head
-        Point(-0.28, +0.45, -0.20),  # 8
-        Point(+0.28, +0.45, -0.20),  # 9
-        Point(+0.28, +0.45, +0.20),  # 10
-        Point(-0.28, +0.45, +0.20),  # 11
-        
-        # Top of head
-        Point(-0.20, +0.75, -0.15),  # 12
-        Point(+0.20, +0.75, -0.15),  # 13
-        Point(+0.20, +0.75, +0.15),  # 14
-        Point(-0.20, +0.75, +0.15),  # 15
-        
-        # Beak
-        Point(-0.08, +0.52, -0.20),   # 16
-        Point(+0.08, +0.52, -0.20),   # 17
-        Point(0.0, +0.43, -0.40),     # 18
-        
-        # Left wing
-        Point(-0.35, +0.15, -0.15),   # 19
-        Point(-0.55, -0.05, -0.15),   # 20
-        Point(-0.45, -0.45, -0.15),   # 21
-        Point(-0.25, -0.30, -0.15),   # 22
-        
-        # Right wing
-        Point(+0.35, +0.15, -0.15),   # 23
-        Point(+0.55, -0.05, -0.15),   # 24
-        Point(+0.45, -0.45, -0.15),   # 25
-        Point(+0.25, -0.30, -0.15),   # 26
-        
-        # Left foot
-        Point(-0.30, -0.60, -0.20),   # 27
-        Point(-0.05, -0.60, -0.20),   # 28
-        Point(-0.05, -0.68, -0.45),   # 29
-        Point(-0.35, -0.68, -0.45),   # 30
-        
-        # Right foot
-        Point(+0.05, -0.60, -0.20),   # 31
-        Point(+0.30, -0.60, -0.20),   # 32
-        Point(+0.35, -0.68, -0.45),   # 33
-        Point(+0.05, -0.68, -0.45),   # 34
-    ]
-    
-    # NOTE(Tejas): These tell us which points to connect
-    # to make the penguin.
-    faces = [
-        # Body
-        [0, 1, 5, 4],
-        [1, 2, 6, 5],
-        [2, 3, 7, 6],
-        [3, 0, 4, 7],
-        
-        # Head
-        [8, 9, 13, 12],
-        [9, 10, 14, 13],
-        [10, 11, 15, 14],
-        [11, 8, 12, 15],
-        
-        # Head to body
-        [4, 5],
-        [5, 9],
-        [9, 8],
-        [8, 4],
-        
-        # Top of head
-        [12, 13],
-        [13, 14],
-        [14, 15],
-        [15, 12],
-        
-        # Beak
-        [16, 17],
-        [16, 18],
-        [17, 18],
-        
-        # Left wing
-        [19, 20],
-        [20, 21],
-        [21, 22],
-        [22, 19],
-        
-        # Right wing
-        [23, 24],
-        [24, 25],
-        [25, 26],
-        [26, 23],
-        
-        # Left foot
-        [27, 28],
-        [28, 29],
-        [29, 30],
-        [30, 27],
-        
-        # Right foot
-        [31, 32],
-        [32, 33],
-        [33, 34],
-        [34, 31],
-    ]
+    # NOTE(Tejas): now this is a fully functional 3D renderer in python. Look
+    # into models.py youll find some functions that will generate an object for
+    # you. You can also paste one of those functions to ChatGPT and ask it
+    # generate a new object with that format and paste that function in
+    # models.py and use that function here!
+    # points_temp, faces = get_cube()
+    # points_temp, faces = get_tree()
+    # points_temp, faces = get_chair()
+    points_temp, faces = get_ant() 
 
+    # NOTE(Tejas): Our point is of type Point but in models.py we dont have
+    # access to Point because we defined Point in this file. We cant include
+    # this file in models.py because then itll be a circular dependency. So we
+    # have to convert the points from list to Point here.
+    points = []
+    for point in points_temp:
+        points.append(Point(point[0], point[1], point[2]))
 
 
     # NOTE(Tejas): this is the speed at which the cube will rotate. The angle is
@@ -261,14 +173,18 @@ def main():
     angle = 0.0
 
     dz = 1.0
-    z_offset = 1.0
+    z_offset = 3.0
+    z_dir = 1.0
 
     running = True
     while running:
 
         delta_time = 1.0 / FPS
         angle += rotation_speed * delta_time
-        z_offset += dz * delta_time
+        z_offset += dz * delta_time * z_dir
+
+        if z_offset > 5.0 or z_offset < 1.0:
+            z_dir *= -1.0
 
         transformed_points = []
 
