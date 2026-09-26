@@ -37,6 +37,24 @@ def clear(shell_context, args):
     # this works for us for now.
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def cd(shell_context, args):
+    try:
+        os.chdir(args[0])
+    except Exception as e:
+        print(f"Error: {e}")
+        shell_context.running = False
+
+def pwd(shell_context, args):
+    print(os.getcwd())
+
+def dir(shell_context, args):
+    try:
+        files = os.listdir(os.getcwd())
+        for file in files:
+            print(file)
+    except Exception as e:
+        print(f"Error: {e}")
+        shell_context.running = False
 
 # NOTE(Tejas): This is a very interesting pattern I learned while implementing
 # the UCI for a Chess application. you have a bunch of commands that you
@@ -51,12 +69,17 @@ class Command:
         self.min_no_of_args = min_no_of_args
         self.max_no_of_args = max_no_of_args
 
-def register_command():
+def register_commands():
+
+    # NOTE(Tejas): we dont support flags for now
     commands = [
         Command("exit" , exit , 0, 0),
         Command("help" , help , 0, 0),
         Command("echo" , echo , 1, None), # NOTE(Tejas): None means no limit.
         Command("clear", clear, 0, 0),
+        Command("pwd"  , pwd  , 0, 0),
+        Command("cd"   , cd   , 1, 1),
+        Command("dir"  , dir  , 0, 0),
     ]
 
     return commands
@@ -80,12 +103,13 @@ class ShellContext:
 def main():
 
     shell_context = ShellContext()
-    shell_context.commands = register_command()
+    shell_context.commands = register_commands()
     shell_context.help_str = build_help_string(shell_context.commands)
     shell_context.running = True
 
     while shell_context.running:
-        print("> ", end="")
+        current_folder = os.getcwd().split("\\")[-1]
+        print(current_folder, "$ ", end="")
 
         # TODO(Tejas): we dont want to use input() because it is line oriented
         # and we cant process inputs like ctrl or the arrow keys.
