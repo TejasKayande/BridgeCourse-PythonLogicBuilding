@@ -14,7 +14,7 @@
 
 # NOTE(Tejas): we are limiting how many points we are actually rendering to the
 # screen. In actual 3D games one object may consist of tens of thousands of
-# points and faces. 
+# points and faces. These computation are usually 
 
 
 # DISCLAIMER(Tejas): This will seem very complicated if you havent done any graphics programming before.
