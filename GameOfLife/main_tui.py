@@ -15,8 +15,12 @@
 import random
 import time
 
-WIDTH = 90
-HEIGHT = 30
+# NOTE(Tejas): we've added this program to the Shell program where we can pass
+# in the world width and height from our Shell and use it here.
+import sys
+
+WIDTH = int(sys.argv[1] if len(sys.argv) > 1 else 90)
+HEIGHT = int(sys.argv[2] if len(sys.argv) > 2 else 30)
 
 # NOTE(Tejas): this is my convention to put g_ before any global
 # variables I use, you dont have to, but this is what I do...

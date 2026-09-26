@@ -14,8 +14,12 @@
 # at that code first and then come back here. I will try to explain the
 # differences here.
 
-WIDTH = 90
-HEIGHT = 30
+# NOTE(Tejas): we've added this program to the Shell program where we can pass
+# in the world width and height from our Shell and use it here.
+import sys
+
+WIDTH = int(sys.argv[1] if len(sys.argv) > 1 else 90)
+HEIGHT = int(sys.argv[2] if len(sys.argv) > 2 else 30)
 
 # NOTE(Tejas): This is state of each cell, we can either have a cell to be white
 # or black (You can rename these to BLACK and WHITE if you want).
