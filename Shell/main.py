@@ -5,11 +5,18 @@
 # @Date:   2026-09-26 Sat
 # ===============================================================================
 
+
 # NOTE(Tejas): Their are certain commands that we cant write code for because we
 # dont have access to it, like clearing the console window which is controled by
 # the program that is rendering the console window. we have to ask that program
 # from our program to perform that command. for that we need to use this module.
 import os
+
+# NOTE(Tejas): Im going to make our other programs accessible from this shell,
+# for that we need the following imports to start those programs as a process
+# from within our shell
+import subprocess
+import sys
 
 # NOTE(Tejas): Following are all the commands that our shell supports.
 # You can create your own commands but creating a function and adding it to the
@@ -42,7 +49,6 @@ def cd(shell_context, args):
         os.chdir(args[0])
     except Exception as e:
         print(f"Error: {e}")
-        shell_context.running = False
 
 def pwd(shell_context, args):
     print(os.getcwd())
@@ -55,6 +61,37 @@ def dir(shell_context, args):
     except Exception as e:
         print(f"Error: {e}")
         shell_context.running = False
+
+def gol(shell_context, args):
+    try:
+        if len(args) == 0:
+            subprocess.run([sys.executable, "../GameOfLife/main_tui.py"])
+        else:
+            subprocess.run([sys.executable, f"../GameOfLife/main_tui.py", *args])
+    except KeyboardInterrupt:
+        print("Exiting Game of Life...")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def langtons_ant(shell_context, args):
+    try:
+        if len(args) == 0:
+            subprocess.run([sys.executable, "../LangtonsAnt/main_tui.py"])
+        else:
+            subprocess.run([sys.executable, f"../LangtonsAnt/main_tui.py", *args])
+    except KeyboardInterrupt:
+        print("Exiting Langtons Ant...")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def spit(shell_context, args):
+    file_path = args[0]
+    try:
+        with open(file_path, 'r') as file:
+            content = file.read()
+            print(content)
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
 
 # NOTE(Tejas): This is a very interesting pattern I learned while implementing
 # the UCI for a Chess application. you have a bunch of commands that you
@@ -80,6 +117,10 @@ def register_commands():
         Command("pwd"  , pwd  , 0, 0),
         Command("cd"   , cd   , 1, 1),
         Command("dir"  , dir  , 0, 0),
+        Command("spit" , spit , 1, 1),
+
+        Command("gol"           , gol         , 0, 2),
+        Command("langtons_ant"  , langtons_ant, 0, 2),
     ]
 
     return commands
@@ -140,7 +181,8 @@ def main():
 
                 else:
                     cmd.proc(shell_context, arguments)
-                    cmd_found = True
+
+                cmd_found = True
 
         if not cmd_found:
             print(f"Error: Command '{command}' not found.")
