@@ -5,7 +5,6 @@
 # @Date:   2026-09-26 Sat
 # ===============================================================================
 
-
 # NOTE(Tejas): Their are certain commands that we cant write code for because we
 # dont have access to it, like clearing the console window which is controled by
 # the program that is rendering the console window. we have to ask that program
@@ -62,6 +61,15 @@ def dir(shell_context, args):
         print(f"Error: {e}")
         shell_context.running = False
 
+def spit(shell_context, args):
+    file_path = args[0]
+    try:
+        with open(file_path, 'r') as file:
+            content = file.read()
+            print(content)
+    except FileNotFoundError:
+        print(f"Error: File '{file_path}' not found.")
+
 def gol(shell_context, args):
     try:
         if len(args) == 0:
@@ -84,14 +92,13 @@ def langtons_ant(shell_context, args):
     except Exception as e:
         print(f"Error: {e}")
 
-def spit(shell_context, args):
-    file_path = args[0]
+def tictaktoe(shell_context, args):
     try:
-        with open(file_path, 'r') as file:
-            content = file.read()
-            print(content)
-    except FileNotFoundError:
-        print(f"Error: File '{file_path}' not found.")
+        subprocess.run([sys.executable, "../TicTakToe/main_proc_tui.py"])
+    except KeyboardInterrupt:
+        print("Exiting TicTakToe...")
+    except Exception as e:
+        print(f"Error: {e}")
 
 # NOTE(Tejas): This is a very interesting pattern I learned while implementing
 # the UCI for a Chess application. you have a bunch of commands that you
@@ -121,6 +128,7 @@ def register_commands():
 
         Command("gol"           , gol         , 0, 2),
         Command("langtons_ant"  , langtons_ant, 0, 2),
+        Command("tictaktoe"     , tictaktoe   , 0, 0),
     ]
 
     return commands
@@ -154,6 +162,7 @@ def main():
 
         # TODO(Tejas): we dont want to use input() because it is line oriented
         # and we cant process inputs like ctrl or the arrow keys.
+        # TODO(Tejas): replace this with msvcrt.
         c = input().split(" ")
 
         command   = c[0]
