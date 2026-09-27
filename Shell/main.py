@@ -53,8 +53,12 @@ def pwd(shell_context, args):
     print(os.getcwd())
 
 def dir(shell_context, args):
+
+    if len(args) > 0:
+        file_path = args[0]
+    file_path = os.getcwd()
     try:
-        files = os.listdir(os.getcwd())
+        files = os.listdir(file_path)
         for file in files:
             print(file)
     except Exception as e:
@@ -100,6 +104,9 @@ def tictaktoe(shell_context, args):
     except Exception as e:
         print(f"Error: {e}")
 
+def stub(shell_context, args):
+    pass
+
 # NOTE(Tejas): This is a very interesting pattern I learned while implementing
 # the UCI for a Chess application. you have a bunch of commands that you
 # implement using a function so a function is a command, it has a name and it is
@@ -117,14 +124,17 @@ def register_commands():
 
     # NOTE(Tejas): we dont support flags for now
     commands = [
-        Command("exit" , exit , 0, 0),
-        Command("help" , help , 0, 0),
+        Command("" , stub, 0, None),
+
+        Command("exit" , exit , 0,    0),
+        Command("help" , help , 0,    0),
         Command("echo" , echo , 1, None), # NOTE(Tejas): None means no limit.
-        Command("clear", clear, 0, 0),
-        Command("pwd"  , pwd  , 0, 0),
-        Command("cd"   , cd   , 1, 1),
-        Command("dir"  , dir  , 0, 0),
-        Command("spit" , spit , 1, 1),
+        Command("clear", clear, 0,    0),
+        Command("cls"  , clear, 0,    0),
+        Command("pwd"  , pwd  , 0,    0),
+        Command("cd"   , cd   , 1,    1),
+        Command("dir"  , dir  , 0,    1),
+        Command("spit" , spit , 1,    1),
 
         Command("gol"           , gol         , 0, 2),
         Command("langtons_ant"  , langtons_ant, 0, 2),

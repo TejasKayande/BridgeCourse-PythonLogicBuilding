@@ -27,7 +27,7 @@ def main():
 
         screen.fill((0, 0, 0)) 
 
-        # Here you would add your BriansBrain logic and rendering code
+        # TODO(Tejas): To be implemented...
 
         pygame.display.flip() # NOTE(Tejas): read double buffering to understand this.
         clock.tick(60) # NOTE(Tejas): limiting fps to 60
