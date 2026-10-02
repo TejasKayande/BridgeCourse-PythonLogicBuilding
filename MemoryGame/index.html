@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Memory Matching Game</title>
+
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js" defer></script>
+</head>
+
+<body>
+
+    <main class="game-container">
+
+        <header class="game-header">
+
+            <h1>Memory Matching Game</h1>
+
+            <p class="game-description">
+                Find all matching pairs by flipping two cards at a time.
+                Try to complete the game in as few moves as possible!
+            </p>
+
+        </header>
+
+
+        <section class="game-stats" aria-label="Game statistics">
+
+            <div class="stat-card">
+                <span class="stat-label">Moves</span>
+                <span class="stat-value" id="moves">0</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">Matched Pairs</span>
+                <span class="stat-value" id="pairs">0 / 8</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">Time</span>
+                <span class="stat-value" id="timer">00:00</span>
+            </div>
+
+        </section>
+
+
+        <section class="game-section">
+            <div class="game-board" id="game-board" role="group" aria-label="Memory matching cards"> </div>
+        </section>
+
+
+        <section class="game-controls">
+            <button type="button" id="restart-button" class="restart-button"> Restart Game </button>
+        </section>
+
+
+        <section class="game-status" aria-live="polite" aria-atomic="true">
+            <p id="game-message"> Good luck! Find all 8 matching pairs.  </p>
+        </section>
+
+
+        <section class="completion-summary" id="completion-summary" hidden>
+
+            <h2>Game Completed!</h2>
+
+            <p> Congratulations! You found all matching pairs.  </p>
+
+            <div class="summary-stats">
+                <p> Total Moves: <span id="final-moves">0</span> </p>
+                <p> Completion Time: <span id="final-time">00:00</span> </p>
+                <p> Accuracy: <span id="final-accuracy">0%</span> </p>
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

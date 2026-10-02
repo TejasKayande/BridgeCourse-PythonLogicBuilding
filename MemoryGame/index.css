@@ -1,0 +1,462 @@
+
+/* THIS IS NOT WRITTEN BY ME: @CHATGPT! */
+
+/* =========================
+   1. Global Styles
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --background: #f4f8fc;
+    --card-background: #ffffff;
+    --text-primary: #172554;
+    --text-secondary: #64748b;
+    --border: #dbeafe;
+    --success: #16a34a;
+    --success-background: #ecfdf5;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--background);
+    color: var(--text-primary);
+
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 30px 15px;
+}
+
+
+/* =========================
+   2. Main Container
+========================= */
+
+.game-container {
+    width: 100%;
+    max-width: 850px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 25px;
+}
+
+
+/* =========================
+   3. Game Header
+========================= */
+
+.game-header {
+    text-align: center;
+    width: 100%;
+}
+
+.game-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+
+    margin-bottom: 12px;
+}
+
+.game-description {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 550px;
+    margin: auto;
+}
+
+
+/* =========================
+   4. Game Statistics
+========================= */
+
+.game-stats {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    background: #eaf3fd;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    padding: 20px;
+}
+
+.stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    position: relative;
+}
+
+.stat-card:not(:last-child)::after {
+    content: "";
+
+    position: absolute;
+    right: 0;
+    top: 10%;
+    height: 80%;
+
+    width: 1px;
+    background: #cbd5e1;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.stat-value {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* =========================
+   5. Game Board
+========================= */
+
+.game-section {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+
+.game-board {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 12px;
+
+    width: 100%;
+    max-width: 500px;
+}
+
+
+/* =========================
+   6. Individual Cards
+========================= */
+
+.card {
+    aspect-ratio: 1 / 1;
+
+    background: linear-gradient(
+        135deg,
+        #2563eb,
+        #1e40af
+    );
+
+    border: 4px solid white;
+    border-radius: 12px;
+
+    box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 2.5rem;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background 0.25s ease,
+        box-shadow 0.25s ease;
+
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Hover effect */
+
+.card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.18);
+}
+
+/* Card when flipped */
+
+.card.flipped {
+    background: var(--card-background);
+
+    border: 2px solid var(--primary);
+
+    transform: rotateY(180deg);
+}
+
+/* Card when matched */
+
+.card.matched {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Accessibility */
+
+.card:focus-visible {
+    outline: 3px solid #f59e0b;
+    outline-offset: 3px;
+}
+
+
+/* =========================
+   7. Game Controls
+========================= */
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.restart-button {
+    padding: 13px 30px;
+
+    background: var(--primary);
+    color: white;
+
+    border: none;
+    border-radius: 9px;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.restart-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.restart-button:active {
+    transform: scale(0.97);
+}
+
+.restart-button:focus-visible {
+    outline: 3px solid #93c5fd;
+    outline-offset: 3px;
+}
+
+
+/* =========================
+   8. Game Status
+========================= */
+
+.game-status {
+    width: 100%;
+
+    background: #eaf3fd;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    text-align: center;
+
+    color: var(--primary-dark);
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+#game-message {
+    line-height: 1.5;
+}
+
+
+/* =========================
+   9. Completion Summary
+========================= */
+
+.completion-summary {
+    width: 100%;
+
+    background: var(--success-background);
+
+    border: 1px solid #bbf7d0;
+    border-radius: 14px;
+
+    padding: 30px;
+
+    text-align: center;
+
+    animation: fadeIn 0.4s ease;
+}
+
+.completion-summary h2 {
+    color: var(--success);
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+}
+
+.completion-summary > p {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+.summary-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.summary-stats p {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.summary-stats span {
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Respect the HTML hidden attribute */
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* =========================
+   10. Animations
+========================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================
+   11. Responsive Design
+========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 20px 12px;
+        align-items: flex-start;
+    }
+
+    .game-container {
+        gap: 20px;
+    }
+
+    .game-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .game-description {
+        font-size: 0.9rem;
+    }
+
+    .game-stats {
+        padding: 15px 8px;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+    }
+
+    .stat-value {
+        font-size: 1.4rem;
+    }
+
+    .game-board {
+        gap: 8px;
+    }
+
+    .card {
+        font-size: 1.8rem;
+        border-radius: 9px;
+    }
+
+    .completion-summary {
+        padding: 20px 12px;
+    }
+
+    .completion-summary h2 {
+        font-size: 1.5rem;
+    }
+
+    .summary-stats {
+        gap: 8px;
+    }
+
+    .summary-stats p {
+        font-size: 0.75rem;
+    }
+
+    .summary-stats span {
+        font-size: 1.2rem;
+    }
+}
+
+
+/* =========================
+   12. Small Mobile Screens
+========================= */
+
+@media (max-width: 360px) {
+
+    .game-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .game-board {
+        gap: 6px;
+    }
+
+    .card {
+        font-size: 1.5rem;
+    }
+
+    .stat-value {
+        font-size: 1.2rem;
+    }
+
+    .restart-button {
+        padding: 11px 22px;
+        font-size: 0.9rem;
+    }
+}
