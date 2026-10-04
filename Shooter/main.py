@@ -100,14 +100,10 @@ class Player:
         # think it looks better this way when the player has a bit of momentum.
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
-            self.velocity.y -= self.acceleration * dt
-        if keys[pygame.K_s]:
-            self.velocity.y += self.acceleration * dt
-        if keys[pygame.K_a]:
-            self.velocity.x -= self.acceleration * dt
-        if keys[pygame.K_d]:
-            self.velocity.x += self.acceleration * dt
+        if keys[pygame.K_w]: self.velocity.y -= self.acceleration * dt
+        if keys[pygame.K_s]: self.velocity.y += self.acceleration * dt
+        if keys[pygame.K_a]: self.velocity.x -= self.acceleration * dt
+        if keys[pygame.K_d]: self.velocity.x += self.acceleration * dt
 
         self.velocity.clip(-self.max_velocity, self.max_velocity, -self.max_velocity, self.max_velocity)
 
@@ -168,6 +164,10 @@ class Bullet:
 
 class GameManager:
     def __init__(self):
+
+        pygame.init()
+        pygame.display.set_caption("Shooter Game")
+
         self.running = True
         self.screen_width = 800
         self.screen_height = 600
@@ -176,19 +176,19 @@ class GameManager:
         # NOTE(Tejas): This is just so we can pass GameManager object around and
         # have functions access to the stuff that it will need. Now we could
         # keep all of this public (thats what I would do) but OOP...
-        self.screen = None
-        self.clock  = None
+        self.screen = pygame.display.set_mode((800, 600))
+        self.clock = pygame.time.Clock()
 
         self.game_over = False
 
         # NOTE(Tejas): game related stuff
         # we dont need to do this here, but we are just making sure that
         # reset_game_state() is called before the game is started.
-        self.player  = None
-        self.bullets = None
-        self.enemies = None
-        self.spawn_timer = None
-        self.spawn_interval = None
+        self.player = Player(400, 500)
+        self.bullets = []
+        self.enemies = [Enemy(400, 100), Enemy(200, 100), Enemy(600, 100)]
+        self.spawn_timer = 0.0
+        self.spawn_interval = 1.0
 
     def reset_game_state(self):
         self.player = Player(400, 500)
@@ -199,16 +199,6 @@ class GameManager:
         self.spawn_interval = 1.0
 
         self.game_over = False
-
-
-def initialize(game_manager):
-    
-    pygame.init()
-    game_manager.screen = pygame.display.set_mode((800, 600))
-    pygame.display.set_caption("Shooter Game")
-    game_manager.clock = pygame.time.Clock()
-
-    game_manager.reset_game_state()
 
 def check_collision(entity1, entity2):
     # NOTE(Tejas): This only works because all of our entities are circles!
@@ -316,7 +306,6 @@ def render_ui(game_manager):
 def main():
 
     game_manager = GameManager()
-    initialize(game_manager)
 
     while game_manager.running:
     
